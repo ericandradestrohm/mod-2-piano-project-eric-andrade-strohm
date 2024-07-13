@@ -68,3 +68,7 @@ body {
     font-size: 10vh;
     color: white;
 }
+
+.playing {
+    background-color: rgb(119,133,204);
+}
