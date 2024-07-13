@@ -1,13 +1,12 @@
 body {
     margin: 0;
-    background-color: rgb(40,40,40);
-    overflow:hidden;
-
+    background-color: rgb(40, 40, 40);
+    overflow: hidden;
 }
+
 .container {
     width: 100vw;
     height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,46 +16,53 @@ body {
     width: 60vw;
     height: 60vh;
     border: 2px solid black;
-
-    display:flex;
+    display: flex;
     align-items: center;
     flex-direction: column;
+    background-color: rgb(60, 60, 60);
 }
+
 .piano-keys {
     width: 100%;
     height: 100%;
-
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     position: relative;
 }
+
 .keys {
-    width: 10%;
-    margin: 0.16rem;
-    margin-top: 0;
+    flex: 1;
+    margin: 0.1rem;
     cursor: pointer;
     position: relative;
     height: 100%;
-    
     border-radius: 10px;
     border: 3px solid #000;
 }
+
 .reg-keys {
     background-color: white;
+    z-index: 1;
 }
-.black-keys {
-    width: 5rem;
-    height: 18rem;
 
-    /* Adds roundness but not at top */
+.black-keys {
+    position: absolute;
+    width: 3vw;
+    height: 60%;
+    background-color: black;
     border-radius: 5px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    background-color: #000;
     z-index: 2;
-    
-    margin: 0 -40px 0 -40px;
 }
+/* Sets black position to keep them responsive as browser changes */
+.black-position-1 { left: 7%; }
+.black-position-2 { left: 17%; }
+.black-position-3 { left: 37%; }
+.black-position-4 { left: 47%; }
+.black-position-5 { left: 57%; }
+.black-position-6 { left: 77%; }
+.black-position-7 { left: 87%; }
 
 .big-font {
     font-size: 10vh;
