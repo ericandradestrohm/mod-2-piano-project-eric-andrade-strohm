@@ -2,12 +2,33 @@ body {
     margin: 0;
     background-color: rgb(40, 40, 40);
     overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+.splash {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+}
+.start-button {
+    padding: 20px 40px;
+    font-size: 2rem;
+    color: white;
+    background-color: #545454;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .container {
-    width: 100vw;
-    height: 100vh;
     display: flex;
+    height: 100%;
+    width: 100%;
     justify-content: center;
     align-items: center;
 }
@@ -78,4 +99,8 @@ body {
 
 .playing {
     background-color: rgb(119,133,204);
+}
+
+#main-content {
+    display:none;
 }
