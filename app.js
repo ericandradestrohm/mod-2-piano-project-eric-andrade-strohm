@@ -10,11 +10,42 @@ const notes = [
     'C7.mp3', 'Db7.mp3', 'D7.mp3', 'Eb7.mp3', 'E7.mp3', 'F7.mp3', 'Gb7.mp3', 'G7.mp3', 'Ab7.mp3', 'A7.mp3', 'Bb7.mp3', 'B7.mp3',
     'C8.mp3'
 ];
+const dataKeys = {
+    65: "C",
+    87: "Db",
+    83: "D",
+    69: "Eb",
+    68: "E",
+    70: "F",
+    84: "Gb",
+    71: "G",
+    89: "Ab",
+    72: "A",
+    85: "Bb",
+    74: "B",
+    75: "C",
+    79: "Db",
+    76: "D",
+    80: "Eb",
+    59: "E"
+}
+let curOctave = 3;
 
 // Queries
 const pianoKeys = document.querySelector('.piano-keys');
 const audioLoader = document.querySelector('.audio-loader');
 const loadingDiv = document.querySelector('.loading');
+
+// Loops through keys and sets the IDs
+for (let keyCode in dataKeys) {
+    let pianoKeyElement = document.querySelector(`[data-key="${keyCode}"]`);
+    // Ignores top keys
+    if (keyCode != 75 && keyCode != 79 && keyCode != 76 && keyCode != 80 && keyCode != 59) {
+        pianoKeyElement.id = `${dataKeys[keyCode]}`+curOctave;
+    } else {
+        pianoKeyElement.id = `${dataKeys[keyCode]}`+(curOctave+1);
+    }
+}
 
 // For loading and playing Audio
 const audioCtx = new AudioContext();
@@ -75,7 +106,7 @@ function playKey(e) {
         console.log(keyDiv.id);
         playNote("C3");
     }
-    
+
 }
 
 function unPlayKey(e) {
