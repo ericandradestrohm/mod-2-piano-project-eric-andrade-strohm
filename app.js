@@ -30,6 +30,8 @@ const dataKeys = {
     59: "E"
 }
 let curOctave = 3;
+// To track which ones are pressed to stop repetitive playing
+let pressedKeys = {};
 
 // Queries
 const pianoKeys = document.querySelector('.piano-keys');
@@ -78,7 +80,7 @@ async function loadAllNotes() {
 }
 
 // Play the corresponding note
-function playNote(note) {
+function playNoteAudio(note) {
     const audioBuffer = audioBuffers[note];
     if (audioBuffer) {
         const source = audioCtx.createBufferSource();
@@ -88,7 +90,7 @@ function playNote(note) {
         source.start(0);
     }
 }
-function stopNote(note, delay) {
+function stopNoteAudio(note, delay) {
     const source = activeSources[note];
     if (source) {
         setTimeout(() => {
@@ -97,25 +99,28 @@ function stopNote(note, delay) {
         }, delay);
     }
 }
+
 function playKey(e) {
-    // Function done when key is pressed
-    console.log(e.keyCode);
-    const keyDiv = document.querySelector(`div[data-key="${e.keyCode}"]`);
-    if (keyDiv) {
-        keyDiv.classList.add('playing');
-        console.log(keyDiv.id);
-        playNote(keyDiv.id);
+    // Function is run when key is pressed
+    if (!pressedKeys[e.keyCode]) {
+        pressedKeys[e.keyCode] = true; // Mark this key as pressed
+        console.log(e.keyCode);
+        const keyDiv = document.querySelector(`div[data-key="${e.keyCode}"]`);
+        if (keyDiv) {
+            keyDiv.classList.add('playing');
+            console.log(keyDiv.id);
+            playNoteAudio(keyDiv.id);
+        }
     }
-
 }
-
 function unPlayKey(e) {
     // Function is done when key is unpressed
+    pressedKeys[e.keyCode] = false; // Mark this key as released
     console.log(e.keyCode);
     const keyDiv = document.querySelector(`div[data-key="${e.keyCode}"]`);
     if (keyDiv) {
         keyDiv.classList.remove('playing');
-        stopNote("C3", 700);
+        stopNoteAudio(keyDiv.id, 900);
     }
 }
 
