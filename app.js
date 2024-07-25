@@ -37,15 +37,18 @@ let pressedKeys = {};
 const pianoKeys = document.querySelector('.piano-keys');
 const audioLoader = document.querySelector('.audio-loader');
 const loadingDiv = document.querySelector('.loading');
+mapKeyIDs(dataKeys, curOctave);
 
-// Loops through keys and sets the IDs
-for (let keyCode in dataKeys) {
-    let pianoKeyElement = document.querySelector(`[data-key="${keyCode}"]`);
-    // Ignores top keys
-    if (keyCode != 75 && keyCode != 79 && keyCode != 76 && keyCode != 80 && keyCode != 59) {
-        pianoKeyElement.id = `${dataKeys[keyCode]}`+curOctave;
-    } else {
-        pianoKeyElement.id = `${dataKeys[keyCode]}`+(curOctave+1);
+function mapKeyIDs(keyMappings, octave) {
+    // Loops through keys and sets the IDs
+    for (let keyCode in keyMappings) {
+        let pianoKeyElement = document.querySelector(`[data-key="${keyCode}"]`);
+        // Ignores top keys
+        if (keyCode != 75 && keyCode != 79 && keyCode != 76 && keyCode != 80 && keyCode != 59) {
+            pianoKeyElement.id = `${keyMappings[keyCode]}` + octave;
+        } else {
+            pianoKeyElement.id = `${keyMappings[keyCode]}` + (octave + 1);
+        }
     }
 }
 
@@ -79,7 +82,7 @@ async function loadAllNotes() {
     loadingDiv.style.display = 'none';
 }
 
-// Play the corresponding note
+// Play the audio for the played note
 function playNoteAudio(note) {
     const audioBuffer = audioBuffers[note];
     if (audioBuffer) {
@@ -100,6 +103,7 @@ function stopNoteAudio(note, delay) {
     }
 }
 
+// Handles the note being played
 function playKey(e) {
     // Function is run when key is pressed
     if (!pressedKeys[e.keyCode]) {
@@ -123,11 +127,34 @@ function unPlayKey(e) {
         stopNoteAudio(keyDiv.id, 900);
     }
 }
-
+// Shifting Octaves
+function shiftOctave(e) {
+    if (e.code === "ShiftLeft") {
+        curOctave -= 1;
+        mapKeyIDs(dataKeys, curOctave);
+    }
+    if (e.code === "ShiftRight")
+    {
+        curOctave += 1;
+        mapKeyIDs(dataKeys, curOctave);
+    }
+}
+function unshiftOctave(e) {
+    if (e.code === "ShiftLeft") {
+        curOctave += 1;
+        mapKeyIDs(dataKeys, curOctave);
+    }
+    if (e.code === "ShiftRight")
+    {
+        curOctave -= 1;
+        mapKeyIDs(dataKeys, curOctave);
+    }
+}
 // Event Listeners
+window.addEventListener('keydown', shiftOctave);
+window.addEventListener('keyup', unshiftOctave);
 window.addEventListener('keydown', playKey);
 window.addEventListener('keyup', unPlayKey);
-
 const startButton = document.getElementById('start-button');
 const splash = document.getElementById('splash');
 const mainContent = document.getElementById('main-content');
@@ -137,4 +164,3 @@ startButton.addEventListener('click', () => {
         mainContent.style.display = 'flex';
     });
 })
-
