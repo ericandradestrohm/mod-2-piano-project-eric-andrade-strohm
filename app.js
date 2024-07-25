@@ -32,7 +32,7 @@ const dataKeys = {
 let curOctave = 3;
 // To track which ones are pressed to stop repetitive playing
 let pressedKeys = {};
-
+let octaveKeys = {};
 // Queries
 const pianoKeys = document.querySelector('.piano-keys');
 const audioLoader = document.querySelector('.audio-loader');
@@ -129,23 +129,25 @@ function unPlayKey(e) {
 }
 // Shifting Octaves
 function shiftOctave(e) {
-    if (e.code === "ShiftLeft") {
-        curOctave -= 1;
-        mapKeyIDs(dataKeys, curOctave);
-    }
-    if (e.code === "ShiftRight")
-    {
-        curOctave += 1;
-        mapKeyIDs(dataKeys, curOctave);
+    if (!octaveKeys[e.keyCode]) {
+        octaveKeys[e.keyCode] = true;
+        if (e.code === "ShiftLeft") {
+            curOctave -= 1;
+            mapKeyIDs(dataKeys, curOctave);
+        }
+        if (e.code === "ShiftRight") {
+            curOctave += 1;
+            mapKeyIDs(dataKeys, curOctave);
+        }
     }
 }
 function unshiftOctave(e) {
+    octaveKeys[e.keyCode] = false;
     if (e.code === "ShiftLeft") {
         curOctave += 1;
         mapKeyIDs(dataKeys, curOctave);
     }
-    if (e.code === "ShiftRight")
-    {
+    if (e.code === "ShiftRight") {
         curOctave -= 1;
         mapKeyIDs(dataKeys, curOctave);
     }
