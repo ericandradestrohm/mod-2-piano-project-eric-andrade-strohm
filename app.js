@@ -37,6 +37,7 @@ let octaveKeys = {};
 const pianoKeys = document.querySelector('.piano-keys');
 const audioLoader = document.querySelector('.audio-loader');
 const loadingDiv = document.querySelector('.loading');
+const displayKeyName = document.querySelector('.key-name');
 mapKeyIDs(dataKeys, curOctave);
 
 function mapKeyIDs(keyMappings, octave) {
@@ -115,6 +116,7 @@ function playKey(e) {
             console.log(keyDiv.id);
             playNoteAudio(keyDiv.id);
         }
+        displayKeyName.textContent = keyDiv.id;
     }
 }
 function unPlayKey(e) {
@@ -160,6 +162,7 @@ window.addEventListener('keyup', unPlayKey);
 const startButton = document.getElementById('start-button');
 const splash = document.getElementById('splash');
 const mainContent = document.getElementById('main-content');
+
 startButton.addEventListener('click', () => {
     loadAllNotes().then(() => {
         splash.style.display = 'none';
