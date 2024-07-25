@@ -14,6 +14,7 @@ const notes = [
 // Queries
 const pianoKeys = document.querySelector('.piano-keys');
 const audioLoader = document.querySelector('.audio-loader');
+const loadingDiv = document.querySelector('.loading');
 
 // For loading and playing Audio
 const audioCtx = new AudioContext();
@@ -30,6 +31,8 @@ async function fetchAndDecodeAudio(note) {
 
 // Load all notes in parallel
 async function loadAllNotes() {
+    document.getElementById('start-button').style.display = 'none';
+    loadingDiv.style.display = 'flex';
     const loadPromises = notes.map(async note => {
         try {
             const audioBuffer = await fetchAndDecodeAudio(note);
@@ -40,6 +43,7 @@ async function loadAllNotes() {
     });
     await Promise.all(loadPromises);
     console.log('All notes loaded');
+    loadingDiv.style.display = 'none';
 }
 
 // Play the corresponding note
