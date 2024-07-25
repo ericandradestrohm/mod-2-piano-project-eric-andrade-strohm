@@ -104,7 +104,7 @@ function playKey(e) {
     if (keyDiv) {
         keyDiv.classList.add('playing');
         console.log(keyDiv.id);
-        playNote("C3");
+        playNote(keyDiv.id);
     }
 
 }
