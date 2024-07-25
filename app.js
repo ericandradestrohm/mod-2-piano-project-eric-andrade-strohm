@@ -17,55 +17,61 @@ const audioLoader = document.querySelector('.audio-loader');
 
 // For loading and playing Audio
 const audioCtx = new AudioContext();
-
-// Asynchronous function to load the audio files
-async function loadNotes(filePath) {
-    // Load the audio file
-    const response = await fetch(filePath);
-    const arrayBuffer = await response.arrayBuffer();
-    const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-    return audioBuffer;
-}
-
-async function setupSamples(paths) {
-    console.log('Setting up samples');
-    const audioBuffers = {};
-
-    for (const path of paths) {
-        const noteName = path.replace('.mp3', '');
-        const sample = await loadNotes(path);
-        audioBuffers[noteName] = sample;
-    }
-    console.log("Setting up done");
-    return audioBuffers;
-}
-
-function playNote(audioBuffer, time){
-    const sampleSource = audioCtx.createBufferSource();
-    sampleSource.buffer = audioBuffer;
-    sampleSource.connect(audioCtx.destination);
-    sampleSource.start(time);
-}
-
 let audioBuffers = {};
-
-async function loadAllNotes() {
-    audioBuffers = await setupSamples(notes);
+let activeSources = [];
+async function fetchAndDecodeAudio(note) {
+    const response = await fetch(`piano-notes/${note}`);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch ${note}: ${response.statusText}`);
+    }
+    const arrayBuffer = await response.arrayBuffer();
+    return audioCtx.decodeAudioData(arrayBuffer);
 }
 
+// Load all notes in parallel
+async function loadAllNotes() {
+    const loadPromises = notes.map(async note => {
+        try {
+            const audioBuffer = await fetchAndDecodeAudio(note);
+            audioBuffers[note.replace('.mp3', '')] = audioBuffer;
+        } catch (error) {
+            console.error(`Error loading ${note}:`, error);
+        }
+    });
+    await Promise.all(loadPromises);
+    console.log('All notes loaded');
+}
+
+// Play the corresponding note
+function playNote(note) {
+    const audioBuffer = audioBuffers[note];
+    if (audioBuffer) {
+        const source = audioCtx.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(audioCtx.destination);
+        activeSources[note] = source;
+        source.start(0);
+    }
+}
+function stopNote(note, delay) {
+    const source = activeSources[note];
+    if (source) {
+        setTimeout(() => {
+            source.stop();
+            delete activeSources[note];
+        }, delay);
+    }
+}
 function playKey(e) {
     // Function done when key is pressed
     console.log(e.keyCode);
     const keyDiv = document.querySelector(`div[data-key="${e.keyCode}"]`);
     if (keyDiv) {
         keyDiv.classList.add('playing');
+        console.log(keyDiv.id);
+        playNote("C3");
     }
-    if (e.keyCode === 65) { // 'A' key for testing, you can map all keys similarly
-        const noteName = 'A0'; // Adjust this based on your mapping
-        if (audioBuffers[noteName]) {
-            playNote(audioBuffers[noteName], 0);
-        }
-    }
+    
 }
 
 function unPlayKey(e) {
@@ -74,19 +80,21 @@ function unPlayKey(e) {
     const keyDiv = document.querySelector(`div[data-key="${e.keyCode}"]`);
     if (keyDiv) {
         keyDiv.classList.remove('playing');
+        stopNote("C3", 700);
     }
 }
 
 // Event Listeners
 window.addEventListener('keydown', playKey);
 window.addEventListener('keyup', unPlayKey);
-document.addEventListener('DOMContentLoaded', loadAllNotes); // Not allowed. Need to create start page.
 
 const startButton = document.getElementById('start-button');
 const splash = document.getElementById('splash');
 const mainContent = document.getElementById('main-content');
 startButton.addEventListener('click', () => {
-    splash.style.display = 'none';
-    mainContent.style.display = 'flex';
+    loadAllNotes().then(() => {
+        splash.style.display = 'none';
+        mainContent.style.display = 'flex';
+    });
 })
 
