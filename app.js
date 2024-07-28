@@ -38,6 +38,8 @@ const pianoKeys = document.querySelector('.piano-keys');
 const audioLoader = document.querySelector('.audio-loader');
 const loadingDiv = document.querySelector('.loading');
 const displayKeyName = document.querySelector('.key-name');
+const pianoWrapper = document.querySelector('.piano-keys-wrapper');
+const octaveDiv = document.querySelector('.octave-text');
 mapKeyIDs(dataKeys, curOctave);
 
 function mapKeyIDs(keyMappings, octave) {
@@ -51,6 +53,7 @@ function mapKeyIDs(keyMappings, octave) {
             pianoKeyElement.id = `${keyMappings[keyCode]}` + (octave + 1);
         }
     }
+    octaveDiv.innerHTML = `Current Octave is: ${octave}`;
 }
 
 // For loading and playing Audio
@@ -132,7 +135,6 @@ function playKey(e) {
     }
 }
 function unPlayKey(e) {
-    console.log(e)
     if (e.type === 'mouseup') {
         const keyDiv = document.querySelector(`.playing`);
         if (keyDiv) {
@@ -182,6 +184,15 @@ window.addEventListener('keydown', playKey);
 window.addEventListener('keyup', unPlayKey);
 pianoKeys.addEventListener('mousedown', playKey);
 window.addEventListener('mouseup', unPlayKey);
+pianoWrapper.addEventListener('click',(e) => {
+    if (e.target.classList.contains('fa-angle-left')){
+        curOctave -= 1;
+        mapKeyIDs(dataKeys, curOctave);
+    } else if (e.target.classList.contains('fa-angle-right')){
+        curOctave += 1;
+        mapKeyIDs(dataKeys, curOctave);
+    }
+});
 
 const startButton = document.getElementById('start-button');
 const splash = document.getElementById('splash');

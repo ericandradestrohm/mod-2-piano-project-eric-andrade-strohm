@@ -27,6 +27,11 @@ body {
     border: 2px solid black;
     border-radius: 25px;
 }
+.octave-text {
+    font-size: 2rem;
+    color: white;
+    -webkit-text-stroke: 0.5px black;
+}
 .start-button {
     padding: 20px 40px;
     font-size: 2rem;
@@ -55,10 +60,17 @@ body {
     flex-direction: column;
     background-color: rgb(60, 60, 60);
 }
-
+.piano-keys-wrapper {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
 .piano-keys {
     width: 80%;
-    height: 70%;
+    height: 100%;
     display: flex;
     justify-content: space-between;
     position: relative;
@@ -79,7 +91,15 @@ body {
     justify-content: flex-end;
     align-items: center;
 }
-
+.arrow {
+    font-size: 3rem;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+}
+.arrow:active {
+    color: black;
+}
 .reg-keys {
     background-color: white;
     z-index: 1;
@@ -110,6 +130,7 @@ body {
 .big-font {
     font-size: 10vh;
     color: white;
+    -webkit-text-stroke: 2px black;
 }
 
 .playing {
