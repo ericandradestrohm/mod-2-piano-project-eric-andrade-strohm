@@ -132,8 +132,9 @@ function playKey(e) {
     }
 }
 function unPlayKey(e) {
+    console.log(e)
     if (e.type === 'mouseup') {
-        const keyDiv = document.querySelector(`div[data-key="${e.target.dataset.key}"]`);
+        const keyDiv = document.querySelector(`.playing`);
         if (keyDiv) {
             keyDiv.classList.remove('playing');
         stopNoteAudio(keyDiv.id, 700);
@@ -180,7 +181,7 @@ window.addEventListener('keyup', unshiftOctave);
 window.addEventListener('keydown', playKey);
 window.addEventListener('keyup', unPlayKey);
 pianoKeys.addEventListener('mousedown', playKey);
-pianoKeys.addEventListener('mouseup', unPlayKey);
+window.addEventListener('mouseup', unPlayKey);
 
 const startButton = document.getElementById('start-button');
 const splash = document.getElementById('splash');

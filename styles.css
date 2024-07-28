@@ -4,6 +4,9 @@ body {
     overflow: hidden;
     width: 100vw;
     height: 100vh;
+    
+    /* Hides highlighting when clicking and dragging */
+    user-select: none;
 }
 
 .splash {
