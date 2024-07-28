@@ -27,6 +27,36 @@ body {
     border: 2px solid black;
     border-radius: 25px;
 }
+.top-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.metronome-box {
+    background-color: white;
+    align-self: flex-end;
+    margin: 10px;
+    padding: 5px;
+    width: 20%;
+    min-width: 180px;
+    max-width: 220px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2rem;
+}
+.bpm-adjuster {
+    display: flex;
+    flex-direction: column;
+}
+.metronome-text {
+    padding: 2px;
+}
+.play-button {
+    color: green;
+}
+
 .octave-text {
     font-size: 2rem;
     color: white;

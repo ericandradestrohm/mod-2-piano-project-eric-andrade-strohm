@@ -139,7 +139,7 @@ function unPlayKey(e) {
         const keyDiv = document.querySelector(`.playing`);
         if (keyDiv) {
             keyDiv.classList.remove('playing');
-        stopNoteAudio(keyDiv.id, 700);
+            stopNoteAudio(keyDiv.id, 700);
         }
     } else {
         // Function is done when key is unpressed
@@ -156,11 +156,11 @@ function unPlayKey(e) {
 function shiftOctave(e) {
     if (!octaveKeys[e.keyCode]) {
         octaveKeys[e.keyCode] = true;
-        if (e.code === "ShiftLeft") {
+        if (e.code === "ShiftLeft" && curOctave > 0) {
             curOctave -= 1;
             mapKeyIDs(dataKeys, curOctave);
         }
-        if (e.code === "ShiftRight") {
+        if (e.code === "ShiftRight" && curOctave < 7) {
             curOctave += 1;
             mapKeyIDs(dataKeys, curOctave);
         }
@@ -184,11 +184,11 @@ window.addEventListener('keydown', playKey);
 window.addEventListener('keyup', unPlayKey);
 pianoKeys.addEventListener('mousedown', playKey);
 window.addEventListener('mouseup', unPlayKey);
-pianoWrapper.addEventListener('click',(e) => {
-    if (e.target.classList.contains('fa-angle-left')){
+pianoWrapper.addEventListener('click', (e) => {
+    if (e.target.classList.contains('fa-angle-left') && curOctave > 0) {
         curOctave -= 1;
         mapKeyIDs(dataKeys, curOctave);
-    } else if (e.target.classList.contains('fa-angle-right')){
+    } else if (e.target.classList.contains('fa-angle-right') && curOctave < 7) {
         curOctave += 1;
         mapKeyIDs(dataKeys, curOctave);
     }
@@ -202,5 +202,9 @@ startButton.addEventListener('click', () => {
     loadAllNotes().then(() => {
         splash.style.display = 'none';
         mainContent.style.display = 'flex';
+        const metronomeBox = document.querySelector('.metronome-box');
+        const spacer = document.querySelector('.spacer-div');
+        spacer.style.width = `${metronomeBox.offsetWidth}px`;
     });
 })
+

@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piano Player</title>
-    <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
@@ -21,7 +21,18 @@
 
     <div class="container" id="main-content">
         <div class="piano-container">
-            <div class='key-name big-font'>C3</div>
+            <div class="top-row">
+                <div class="spacer-div"></div>
+                <div class='key-name big-font'>C3</div>
+                <div class="metronome-box">
+                    <div class="bpm metronome-text">120 BPM</div>
+                    <div class="bpm-adjuster metronome-text">
+                        <i class="fa-solid fa-plus "></i>
+                        <i class="fa-solid fa-minus"></i>
+                    </div>
+                    <i class="fa-solid fa-play play-button metronome-text"></i>
+                </div>
+            </div>
             <div class="octave-text"></div>
             <div class="piano-keys-wrapper">
                 <i class="fa-solid fa-angle-left arrow"></i>
@@ -49,6 +60,7 @@
         </div>
     </div>
     <div class="audio-loader"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="./app.js"></script>
 </body>
 
