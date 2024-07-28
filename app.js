@@ -106,27 +106,47 @@ function stopNoteAudio(note, delay) {
 
 // Handles the note being played
 function playKey(e) {
-    // Function is run when key is pressed
-    if (!pressedKeys[e.keyCode]) {
-        pressedKeys[e.keyCode] = true; // Mark this key as pressed
-        console.log(e.keyCode);
-        const keyDiv = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    console.log(e);
+    if (e.type === 'mousedown') {
+        // Function runs on mouse clicks
+        const keyDiv = document.querySelector(`div[data-key="${e.target.dataset.key}"]`);
         if (keyDiv) {
             keyDiv.classList.add('playing');
             console.log(keyDiv.id);
             playNoteAudio(keyDiv.id);
         }
         displayKeyName.textContent = keyDiv.id;
+    } else {
+        // Function is run when key is pressed
+        if (!pressedKeys[e.keyCode]) {
+            pressedKeys[e.keyCode] = true; // Mark this key as pressed
+            console.log(e.keyCode);
+            const keyDiv = document.querySelector(`div[data-key="${e.keyCode}"]`);
+            if (keyDiv) {
+                keyDiv.classList.add('playing');
+                console.log(keyDiv.id);
+                playNoteAudio(keyDiv.id);
+            }
+            displayKeyName.textContent = keyDiv.id;
+        }
     }
 }
 function unPlayKey(e) {
-    // Function is done when key is unpressed
-    pressedKeys[e.keyCode] = false; // Mark this key as released
-    console.log(e.keyCode);
-    const keyDiv = document.querySelector(`div[data-key="${e.keyCode}"]`);
-    if (keyDiv) {
-        keyDiv.classList.remove('playing');
-        stopNoteAudio(keyDiv.id, 900);
+    if (e.type === 'mouseup') {
+        const keyDiv = document.querySelector(`div[data-key="${e.target.dataset.key}"]`);
+        if (keyDiv) {
+            keyDiv.classList.remove('playing');
+        stopNoteAudio(keyDiv.id, 700);
+        }
+    } else {
+        // Function is done when key is unpressed
+        pressedKeys[e.keyCode] = false; // Mark this key as released
+        console.log(e.keyCode);
+        const keyDiv = document.querySelector(`div[data-key="${e.keyCode}"]`);
+        if (keyDiv) {
+            keyDiv.classList.remove('playing');
+            stopNoteAudio(keyDiv.id, 700);
+        }
     }
 }
 // Shifting Octaves
@@ -159,6 +179,9 @@ window.addEventListener('keydown', shiftOctave);
 window.addEventListener('keyup', unshiftOctave);
 window.addEventListener('keydown', playKey);
 window.addEventListener('keyup', unPlayKey);
+pianoKeys.addEventListener('mousedown', playKey);
+pianoKeys.addEventListener('mouseup', unPlayKey);
+
 const startButton = document.getElementById('start-button');
 const splash = document.getElementById('splash');
 const mainContent = document.getElementById('main-content');
