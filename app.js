@@ -42,10 +42,10 @@ const displayKeyName = document.querySelector('.key-name');
 const pianoWrapper = document.querySelector('.piano-keys-wrapper');
 const octaveDiv = document.querySelector('.octave-text');
 const startButton = document.getElementById('start-button');
-const splash = document.getElementById('splash');
 // const mainContent = document.getElementById('main-content');
 const mainContent = document.querySelector('.container-fluid');
-const metronomePlay = document.getElementById('metronome-play')
+const metronomePlay = document.getElementById('metronome-play');
+const songList = document.getElementById('song-list');
 
 
 // Maps all the keys with the keyboards, but essentially reloads the keyboard
@@ -185,10 +185,17 @@ function unshiftOctave(e) {
 
 mapKeyIDs(dataKeys, curOctave);
 
+function addActive(l) {
+    l.classList.add('active');
+}
+function removeActive(l) {
+    l.classList.remove('active');
+}
+
 // Event Listeners
 startButton.addEventListener('click', () => {
     loadAllNotes().then(() => {
-        splash.style.display = 'none';
+        document.getElementById('splash').style.display = 'none';
         mainContent.classList.remove('d-none');
         mainContent.classList.add('d-block');
         // mainContent.style.display = 'flex';

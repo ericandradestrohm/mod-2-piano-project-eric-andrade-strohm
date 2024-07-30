@@ -15,6 +15,28 @@
 </head>
 
 <body>
+    <!-- Song List Modal -->
+    <div class="modal fade" id="song-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="song-modal-Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="song-modal-Label">Saved Songs</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group" id="song-list">
+                        <li onmouseenter="addActive(this)" onmouseleave="removeActive(this)" class="list-group-item individual-song" type="option">Song 1</li>
+                        <li onmouseenter="addActive(this)" onmouseleave="removeActive(this)" class="list-group-item individual-song" type="option">Song 2</li>
+                        <li onmouseenter="addActive(this)" onmouseleave="removeActive(this)" class="list-group-item individual-song" type="option">Song 3</li>
+                        <li onmouseenter="addActive(this)" onmouseleave="removeActive(this)" class="list-group-item individual-song" type="option">Song 4</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="splash" id="splash">
         <button class="start-button" id="start-button">
             Start
@@ -54,8 +76,8 @@
                     <i class="fa-solid fa-angle-right arrow"></i>
                 </div>
             </div>
-            <div class="col-2 left-column">
-                <div class="metronome-box d-flex justify-content-center align-items-center">
+            <div class="col-2 left-column d-flex flex-column justify-content-between align-items-center">
+                <div class="metronome-box d-flex justify-content-around align-items-center">
                     <div class="bpm metronome-text">120 BPM</div>
                     <div class="bpm-adjuster metronome-text">
                         <i class="fa-solid fa-plus "></i>
@@ -63,7 +85,9 @@
                     </div>
                     <i class="fa-solid fa-play play-button metronome-text" id="metronome-play"></i>
                 </div>
-                <button class="btn btn-primary song-button justify-content-space-between" type="submit">Button</button>
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#song-modal">
+                <i class="fa-solid fa-folder song-button"></i>
+            </button>
             </div>
         </div>
     </div>
