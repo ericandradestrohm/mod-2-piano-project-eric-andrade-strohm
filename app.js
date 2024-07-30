@@ -185,11 +185,11 @@ function unshiftOctave(e) {
 
 mapKeyIDs(dataKeys, curOctave);
 
-function addActive(l) {
-    l.classList.add('active');
+function addActive(e) {
+    e.target.classList.add('active');
 }
-function removeActive(l) {
-    l.classList.remove('active');
+function removeActive(e) {
+    e.target.classList.remove('active');
 }
 
 // Event Listeners
@@ -200,8 +200,6 @@ startButton.addEventListener('click', () => {
         mainContent.classList.add('d-block');
         // mainContent.style.display = 'flex';
         const metronomeBox = document.querySelector('.metronome-box');
-        const spacer = document.querySelector('.spacer-div');
-        spacer.style.width = `${metronomeBox.offsetWidth}px`;
     });
 })
 
@@ -211,6 +209,8 @@ window.addEventListener('keydown', playKey);
 window.addEventListener('keyup', unPlayKey);
 pianoKeys.addEventListener('mousedown', playKey);
 window.addEventListener('mouseup', unPlayKey);
+songList.addEventListener('mouseover', addActive);
+songList.addEventListener('mouseout', removeActive);
 metronomePlay.addEventListener('click', (e) => {
     if(metronomePlay.classList.contains('fa-play')) {
         metronomePlay.style.color ='red';
