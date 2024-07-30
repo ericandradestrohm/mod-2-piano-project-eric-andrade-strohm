@@ -1,4 +1,4 @@
-// Array of all 88 keys
+// Array for all 88 notes' mp3 file names
 const notes = [
     'A0.mp3', 'Bb0.mp3', 'B0.mp3',
     'C1.mp3', 'Db1.mp3', 'D1.mp3', 'Eb1.mp3', 'E1.mp3', 'F1.mp3', 'Gb1.mp3', 'G1.mp3', 'Ab1.mp3', 'A1.mp3', 'Bb1.mp3', 'B1.mp3',
@@ -10,6 +10,7 @@ const notes = [
     'C7.mp3', 'Db7.mp3', 'D7.mp3', 'Eb7.mp3', 'E7.mp3', 'F7.mp3', 'Gb7.mp3', 'G7.mp3', 'Ab7.mp3', 'A7.mp3', 'Bb7.mp3', 'B7.mp3',
     'C8.mp3'
 ];
+// Array for key-to-keyCode mapping
 const dataKeys = {
     65: "C",
     87: "Db",
@@ -40,8 +41,14 @@ const loadingDiv = document.querySelector('.loading');
 const displayKeyName = document.querySelector('.key-name');
 const pianoWrapper = document.querySelector('.piano-keys-wrapper');
 const octaveDiv = document.querySelector('.octave-text');
-mapKeyIDs(dataKeys, curOctave);
+const startButton = document.getElementById('start-button');
+const splash = document.getElementById('splash');
+// const mainContent = document.getElementById('main-content');
+const mainContent = document.querySelector('.container-fluid');
+const metronomePlay = document.getElementById('metronome-play')
 
+
+// Maps all the keys with the keyboards, but essentially reloads the keyboard
 function mapKeyIDs(keyMappings, octave) {
     // Loops through keys and sets the IDs
     for (let keyCode in keyMappings) {
@@ -68,7 +75,6 @@ async function fetchAndDecodeAudio(note) {
     const arrayBuffer = await response.arrayBuffer();
     return audioCtx.decodeAudioData(arrayBuffer);
 }
-
 // Load all notes in parallel
 async function loadAllNotes() {
     document.getElementById('start-button').style.display = 'none';
@@ -85,7 +91,6 @@ async function loadAllNotes() {
     console.log('All notes loaded');
     loadingDiv.style.display = 'none';
 }
-
 // Play the audio for the played note
 function playNoteAudio(note) {
     const audioBuffer = audioBuffers[note];
@@ -177,13 +182,39 @@ function unshiftOctave(e) {
         mapKeyIDs(dataKeys, curOctave);
     }
 }
+
+mapKeyIDs(dataKeys, curOctave);
+
 // Event Listeners
+startButton.addEventListener('click', () => {
+    loadAllNotes().then(() => {
+        splash.style.display = 'none';
+        mainContent.classList.remove('d-none');
+        mainContent.classList.add('d-block');
+        // mainContent.style.display = 'flex';
+        const metronomeBox = document.querySelector('.metronome-box');
+        const spacer = document.querySelector('.spacer-div');
+        spacer.style.width = `${metronomeBox.offsetWidth}px`;
+    });
+})
+
 window.addEventListener('keydown', shiftOctave);
 window.addEventListener('keyup', unshiftOctave);
 window.addEventListener('keydown', playKey);
 window.addEventListener('keyup', unPlayKey);
 pianoKeys.addEventListener('mousedown', playKey);
 window.addEventListener('mouseup', unPlayKey);
+metronomePlay.addEventListener('click', (e) => {
+    if(metronomePlay.classList.contains('fa-play')) {
+        metronomePlay.style.color ='red';
+        metronomePlay.classList.remove('fa-play');
+        metronomePlay.classList.add('fa-stop');
+    } else if (metronomePlay.classList.contains('fa-stop')) {
+        metronomePlay.style.color ='green';
+        metronomePlay.classList.remove('fa-stop');
+        metronomePlay.classList.add('fa-play');
+    }
+})
 pianoWrapper.addEventListener('click', (e) => {
     if (e.target.classList.contains('fa-angle-left') && curOctave > 0) {
         curOctave -= 1;
@@ -194,17 +225,5 @@ pianoWrapper.addEventListener('click', (e) => {
     }
 });
 
-const startButton = document.getElementById('start-button');
-const splash = document.getElementById('splash');
-const mainContent = document.getElementById('main-content');
 
-startButton.addEventListener('click', () => {
-    loadAllNotes().then(() => {
-        splash.style.display = 'none';
-        mainContent.style.display = 'flex';
-        const metronomeBox = document.querySelector('.metronome-box');
-        const spacer = document.querySelector('.spacer-div');
-        spacer.style.width = `${metronomeBox.offsetWidth}px`;
-    });
-})
 

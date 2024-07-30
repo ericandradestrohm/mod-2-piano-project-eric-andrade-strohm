@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piano Player</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles.css">
 </head>
 
@@ -19,43 +24,46 @@
         </div>
     </div>
 
-    <div class="container" id="main-content">
-        <div class="piano-container">
-            <div class="top-row">
-                <div class="spacer-div"></div>
+    <div class="container-fluid d-none h-100">
+        <div class="row my-row d-flex">
+            <div class="col-2 left-space"></div>
+            <div class="piano-container col-8 d-flex">
                 <div class='key-name big-font'>C3</div>
-                <div class="metronome-box">
+                <div class="octave-text"></div>
+                <div class="piano-keys-wrapper">
+                    <i class="fa-solid fa-angle-left arrow"></i>
+                    <div class="piano-keys">
+                        <div class="keys reg-keys" data-key="65">A</div>
+                        <div class="keys black-keys black-position-1" data-key="87">W</div>
+                        <div class="keys reg-keys" data-key="83">S</div>
+                        <div class="keys black-keys black-position-2" data-key="69">E</div>
+                        <div class="keys reg-keys" data-key="68">D</div>
+                        <div class="keys reg-keys" data-key="70">F</div>
+                        <div class="keys black-keys black-position-3" data-key="84">T</div>
+                        <div class="keys reg-keys" data-key="71">G</div>
+                        <div class="keys black-keys black-position-4" data-key="89">Y</div>
+                        <div class="keys reg-keys" data-key="72">H</div>
+                        <div class="keys black-keys black-position-5" data-key="85">U</div>
+                        <div class="keys reg-keys" data-key="74">J</div>
+                        <div class="keys reg-keys" data-key="75">K</div>
+                        <div class="keys black-keys black-position-6" data-key="79">O</div>
+                        <div class="keys reg-keys" data-key="76">L</div>
+                        <div class="keys black-keys black-position-7" data-key="80">P</div>
+                        <div class="keys reg-keys" data-key="59">;</div>
+                    </div>
+                    <i class="fa-solid fa-angle-right arrow"></i>
+                </div>
+            </div>
+            <div class="col-2 left-column">
+                <div class="metronome-box d-flex justify-content-center align-items-center">
                     <div class="bpm metronome-text">120 BPM</div>
                     <div class="bpm-adjuster metronome-text">
                         <i class="fa-solid fa-plus "></i>
                         <i class="fa-solid fa-minus"></i>
                     </div>
-                    <i class="fa-solid fa-play play-button metronome-text"></i>
+                    <i class="fa-solid fa-play play-button metronome-text" id="metronome-play"></i>
                 </div>
-            </div>
-            <div class="octave-text"></div>
-            <div class="piano-keys-wrapper">
-                <i class="fa-solid fa-angle-left arrow"></i>
-                <div class="piano-keys">
-                    <div class="keys reg-keys" data-key="65">A</div>
-                    <div class="keys black-keys black-position-1" data-key="87">W</div>
-                    <div class="keys reg-keys" data-key="83">S</div>
-                    <div class="keys black-keys black-position-2" data-key="69">E</div>
-                    <div class="keys reg-keys" data-key="68">D</div>
-                    <div class="keys reg-keys" data-key="70">F</div>
-                    <div class="keys black-keys black-position-3" data-key="84">T</div>
-                    <div class="keys reg-keys" data-key="71">G</div>
-                    <div class="keys black-keys black-position-4" data-key="89">Y</div>
-                    <div class="keys reg-keys" data-key="72">H</div>
-                    <div class="keys black-keys black-position-5" data-key="85">U</div>
-                    <div class="keys reg-keys" data-key="74">J</div>
-                    <div class="keys reg-keys" data-key="75">K</div>
-                    <div class="keys black-keys black-position-6" data-key="79">O</div>
-                    <div class="keys reg-keys" data-key="76">L</div>
-                    <div class="keys black-keys black-position-7" data-key="80">P</div>
-                    <div class="keys reg-keys" data-key="59">;</div>
-                </div>
-                <i class="fa-solid fa-angle-right arrow"></i>
+                <button class="btn btn-primary song-button justify-content-space-between" type="submit">Button</button>
             </div>
         </div>
     </div>

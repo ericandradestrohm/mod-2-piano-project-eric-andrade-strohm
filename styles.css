@@ -1,5 +1,4 @@
 body {
-    margin: 0;
     background-color: rgb(40, 40, 40);
     overflow: hidden;
     width: 100vw;
@@ -27,24 +26,21 @@ body {
     border: 2px solid black;
     border-radius: 25px;
 }
-.top-row {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+.my-row {
+    height: 90%;
+}
+.left-column {
+    background-color: blue;
 }
 .metronome-box {
     background-color: white;
-    align-self: flex-end;
+    border:1px solid black;
     margin: 10px;
     padding: 5px;
-    width: 20%;
+    font-size: 1.5rem;
+
     min-width: 180px;
     max-width: 220px;
-
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    font-size: 1.5rem;
 }
 .bpm-adjuster {
     display: flex;
@@ -73,17 +69,8 @@ body {
     transition: background-color 0.3s;
 }
 
-.container {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-}
 
 .piano-container {
-    width: 60vw;
-    height: 70vh;
     border: 2px solid black;
     display: flex;
     align-items: center;
@@ -105,7 +92,6 @@ body {
     justify-content: space-between;
     position: relative;
 }
-
 .keys {
     flex: 1;
     margin: 0.1rem;
@@ -165,8 +151,4 @@ body {
 
 .playing {
     background-color: rgb(119,133,204);
-}
-
-#main-content {
-    display:none;
 }
